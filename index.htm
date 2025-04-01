@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ScryOne</title>
+</head>
+<body>
+<script>
+async function callApi() {
+    //const res = await fetch("https://api.scryfall.com/cards/multiverse/505306");
+    const res = await fetch("https://api.scryfall.com/cards/random?q=lang%3Ajapanese");
+    const json = await res.json();
+    console.log(json);
+    // オラクルのテキスト
+    var oracle_cardtext = json.name + " " + json.mana_cost + "</br>" + json.type_line + "</br>";
+    if(json.oracle_text != undefined){
+        oracle_cardtext = oracle_cardtext + json.oracle_text.replace(/\n/g, "<br>");
+    }
+    if((json.power != undefined)&&(json.toughness != undefined)){
+        oracle_cardtext = oracle_cardtext + "</br>" + json.power + "/" + json.toughness;
+    }
+    document.write(oracle_cardtext);
+    // 実際のテキスト
+    if(json.printed_text != undefined){
+        var printed_cardtext = json.printed_name + " " + json.mana_cost + "</br>" + json.printed_type_line + "</br>" + json.printed_text.replace(/\n/g, "<br>");
+        if((json.power != undefined)&&(json.toughness != undefined)){
+            printed_cardtext = printed_cardtext + "</br>" + json.power + "/" + json.toughness;
+        }
+        document.write("<br><br><br>" + printed_cardtext);
+    }
+    // フレーバーテキスト
+    if(json.flavor_text != undefined){
+        document.write("<br><br>" + json.flavor_text);
+    }
+}
+
+callApi();
+document.write("Welcome To Scry One!");
+</script>
+</body>
+</html>
