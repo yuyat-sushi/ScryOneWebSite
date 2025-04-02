@@ -20,13 +20,14 @@ async function callApi() {
     }
     document.write(oracle_cardtext);
     // 実際のテキスト
+    var printed_cardtext = json.printed_name + " " + json.mana_cost + "</br>" + json.printed_type_line;
     if(json.printed_text != undefined){
-        var printed_cardtext = json.printed_name + " " + json.mana_cost + "</br>" + json.printed_type_line + "</br>" + json.printed_text.replace(/\n/g, "<br>");
-        if((json.power != undefined)&&(json.toughness != undefined)){
-            printed_cardtext = printed_cardtext + "</br>" + json.power + "/" + json.toughness;
-        }
-        document.write("<br><br><br>" + printed_cardtext);
+        var printed_cardtext = printed_cardtext + "</br>" + json.printed_text.replace(/\n/g, "<br>");
     }
+    if((json.power != undefined)&&(json.toughness != undefined)){
+        printed_cardtext = printed_cardtext + "</br>" + json.power + "/" + json.toughness;
+    }
+    document.write("<br><br><br>" + printed_cardtext);
     // フレーバーテキスト
     if(json.flavor_text != undefined){
         document.write("<br><br>" + json.flavor_text);
